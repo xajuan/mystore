@@ -1,0 +1,100 @@
+<style>
+    /* Estilos LOCALES para pagination.html */
+    .pagination-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+
+    .pagination {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        list-style: none !important;
+        list-style-type: none !important;
+        margin: 0 !important;
+        padding: 0.5rem !important;
+        background: rgba(30, 41, 59, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        gap: 0.5rem;
+    }
+
+    .page-item {
+        display: inline-flex !important;
+        list-style: none !important;
+        list-style-type: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .page-item::before,
+    .page-item::after {
+        content: none !important;
+    }
+
+    .page-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 0.85rem;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #94a3b8;
+        text-decoration: none;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap;
+    }
+
+    .page-link:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #f8fafc;
+        transform: translateY(-2px);
+    }
+
+    .page-item.active .page-link {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
+    }
+</style>
+
+{% if comments.has_other_pages %}
+<nav class="pagination-nav" aria-label="Navegación de páginas">
+    <ul class="pagination">
+        {% if comments.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ comments.previous_page_number }}" aria-label="Anterior">‹ Ant</a>
+        </li>
+        {% endif %}
+
+        {% for i in comments.paginator.page_range %}
+            {% if i == comments.number %}
+            <li class="page-item active">
+                <span class="page-link">{{ i }}</span>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if comments.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ comments.next_page_number }}" aria-label="Siguiente">Sig ›</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
